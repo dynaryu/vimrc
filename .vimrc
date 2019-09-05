@@ -1,4 +1,5 @@
 set nocompatible              " be iMproved, required
+set autoread                  " detect when a file is changed
 filetype off                  " required
 
 set wrap
@@ -11,15 +12,13 @@ syntax enable
 " show line numbers
 set number
 
-" set tabs to have 4 spaces
-set ts=4
-
 " indent when moving to the next line while writing code
 set autoindent
 
 " expand tabs into spaces
 set expandtab
-
+" set tabs to have 4 spaces
+set ts=4
 " when using the >> or << commands, shift lines by 4 spaces
 set shiftwidth=4
 
@@ -35,14 +34,69 @@ let python_highlight_all = 1
 " access system clipboard 
 set clipboard=unnamed
 
+" faster redrawing
+set ttyfast
+
+" color scheme
+colorscheme delek
+hi SignColumn ctermbg=none 
+"guibg=#131313
+"hi DiffAdd      gui=none    guifg=NONE          guibg=#bada9f
+"hi DiffChange   gui=none    guifg=NONE          guibg=#e5d5ac
+"hi DiffDelete   gui=bold    guifg=#ff8080       guibg=#ffb0b0
+"hi DiffText     gui=none    guifg=NONE          guibg=#8cbee2
+
+" highlight lines in Sy and vimdiff etc.)
+highlight DiffAdd           cterm=bold ctermbg=none ctermfg=119
+highlight DiffDelete        cterm=bold ctermbg=none ctermfg=167
+highlight DiffChange        cterm=bold ctermbg=none ctermfg=227
+
+" highlight signs in Sy
+" change 237 to none
+highlight SignifySignAdd    cterm=bold ctermbg=none  ctermfg=119
+highlight SignifySignDelete cterm=bold ctermbg=none  ctermfg=167
+highlight SignifySignChange cterm=bold ctermbg=none  ctermfg=227
+
+" line number to grey
+highlight LineNr ctermfg=grey
+
 " split
 set splitbelow
 set splitright
+
 "split navigations
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+
+augroup autoquickfix
+    autocmd!
+    autocmd QuickFixCmdPost [^l]* cwindow
+    autocmd QuickFixCmdPost    l* lwindow
+augroup END
+
+"faster scrolling YE
+nnoremap <C-Y> 4<C-Y>
+nnoremap <C-E> 4<C-E>
+
+au BufNewFile,BufRead *.py
+    \ set tabstop=4 |
+    \ set softtabstop=4 |
+    \ set shiftwidth=4 |
+    \ set textwidth=0 |
+    \ set expandtab |
+    \ set autoindent |
+    \ set fileformat=unix
+
+set encoding=utf-8
+
+" set the runtime path to include Vundle and initialize
+" set rtp+=~/.vim/bundle/Vundle.vim
+" call vundle#begin()
+
+" alternatively, pass a path where Vundle should install plugins
+noremap e 5e
 
 au BufNewFile,BufRead *.py
     \ set tabstop=4 |
@@ -69,9 +123,12 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 Plug 'tpope/vim-fugitive' "ultimate git helper
 Plug 'Valloric/YouCompleteMe' 
-"let g:ycm_autoclose_preview_window_after_completion=1
-"map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
-Plug 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+let g:ycm_autoclose_preview_window_after_completion=1
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+"Plug 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+Plug 'mhinz/vim-signify'
+let g:Signify_vcs_list = ['git']
+Plug 'craigemery/vim-autotag'
 
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
