@@ -15,6 +15,16 @@ set number
 " indent when moving to the next line while writing code
 set autoindent
 
+" show file name constantly
+set laststatus=2
+set statusline=%F%m%r%h%w
+"set statusline+=[FORMAT=%{&ff}]
+"set statusline+=[TYPE=%Y]
+set statusline+=[%04l,%04v]
+set statusline+=[%p%%]
+set statusline+=[%L] 
+"set statusline+=%F
+
 " expand tabs into spaces
 set expandtab
 " set tabs to have 4 spaces
@@ -128,8 +138,26 @@ map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 "Plug 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 Plug 'mhinz/vim-signify'
 let g:Signify_vcs_list = ['git']
-Plug 'craigemery/vim-autotag'
+"Plug 'craigemery/vim-autotag'
+Plug 'ludovicchabant/vim-gutentags'
+"enable gtags module
+let g:gutentags_modules = ['ctags']
+"let g:gutentags_modules = ['ctags', 'gtags_cscope']
+" put tags file into .git
+let g:gutentags_ctags_tagfile = '.git/tags'
+set statusline+=%{gutentags#statusline()}
 
+" config project root markers.
+let g:gutentags_project_root = ['.git']
+let g:gutentags_ctags_extra_args = ['--tag-relative=no']
+
+let g:gutentags_add_default_project_roots=0
+" generate datebases in my cache directory, prevent gtags files polluting my
+" project
+let g:gutentags_cache_dir = expand('~/.cache/tags')
+
+
+"config project rooa markers
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
