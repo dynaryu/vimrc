@@ -119,6 +119,14 @@ au BufNewFile,BufRead *.py
 
 set encoding=utf-8
 
+" yanking to windows clipboard from vim
+if system('uname -r') =~ "microsoft"
+    augroup Yank
+    autocmd!
+    autocmd TextYankPost * :call system('/mnt/c/windows/system32/clip.exe ',@")
+    augroup END
+endif
+
 " set the runtime path to include Vundle and initialize
 " set rtp+=~/.vim/bundle/Vundle.vim
 " call vundle#begin()
@@ -157,6 +165,12 @@ let g:gutentags_add_default_project_roots=0
 let g:gutentags_cache_dir = expand('~/.cache/tags')
 
 
+
+" Matlab plugin
+Plug 'MortenStabenau/matlab-vim'
+
+
+"
 "config project rooa markers
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
