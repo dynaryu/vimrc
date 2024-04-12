@@ -6,6 +6,9 @@ set wrap
 set linebreak
 set nolist  "list disables linebreak
 
+" slow vim in wsl
+set timeoutlen=1000 ttimeoutlen=0
+
 " enable syntax highlighting
 syntax enable
 
@@ -42,7 +45,11 @@ set showmatch
 let python_highlight_all = 1
 
 " access system clipboard 
-set clipboard=unnamed
+if system('uname -s') == "Darwin\n"
+  set clipboard=unnamed "OSX
+else
+  set clipboard=unnamedplus "Linux
+endif
 
 " faster redrawing
 set ttyfast
@@ -137,8 +144,10 @@ call plug#begin('~/.vim/plugged')
 " let Vundle manage Vundle, required
 " Plugin 'VundleVim/Vundle.vim'
 Plug 'kien/ctrlp.vim' " fuzzy find files
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
+
+"Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+"let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
+
 Plug 'tpope/vim-fugitive' "ultimate git helper
 Plug 'Valloric/YouCompleteMe' 
 let g:ycm_autoclose_preview_window_after_completion=1
@@ -167,7 +176,7 @@ let g:gutentags_cache_dir = expand('~/.cache/tags')
 
 
 " Matlab plugin
-Plug 'MortenStabenau/matlab-vim'
+"Plug 'MortenStabenau/matlab-vim'
 
 
 "
