@@ -1,6 +1,7 @@
 set nocompatible              " be iMproved, required
 set autoread                  " detect when a file is changed
 filetype off                  " required
+set tabstop=4
 
 set wrap
 set linebreak
@@ -163,6 +164,12 @@ let g:gutentags_modules = ['ctags']
 " put tags file into .git
 let g:gutentags_ctags_tagfile = '.git/tags'
 set statusline+=%{gutentags#statusline()}
+
+" to know what file format
+" let g:gutentags_trace = 1
+let g:gutentags_ctags_exclude = [
+            \ '/mnt/c/Projects/MBNpy/build/*'
+            \]
 
 " config project root markers.
 let g:gutentags_project_root = ['.git']
